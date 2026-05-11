@@ -88,7 +88,15 @@
           <option>Pix</option>
           <option>Crédito</option>
           <option>Débito</option>
+          <option>Dinheiro</option>
         </select>
+
+        <textarea
+          id="observacao"
+          rows="3"
+          placeholder="Observação do pedido"
+          class="w-full border-2 border-orange-200 rounded-2xl p-4"
+        ></textarea>
 
         <div class="bg-orange-50 border-2 border-orange-200 rounded-3xl p-5">
 
@@ -101,6 +109,10 @@
           <div class="mt-5 border-t pt-4">
             <p class="text-lg">
               Taxa de entrega: <strong>R$ 2,00</strong>
+            </p>
+
+            <p class="text-lg">
+              Carne extra: <strong>+R$ 2,00 cada</strong>
             </p>
 
             <p class="text-2xl font-black text-orange-700 mt-2">
@@ -137,18 +149,21 @@
 </div>
 
 <script>
-const itens = [
-  "Carne Guisada",
-  "Galinha Guisada",
-  "Frango na Chapa",
-  "Filé de Peixe",
-  "Panqueca de Frango",
-  "Fritada de Carne Seca",
 
+const carnes = [
+  "Bife ao Molho",
+  "Galinha Guisada",
+  "Strogonoff de Frango",
+  "Frango na Chapa",
+  "Fígado Acebolado",
+  "Filé de Peixe",
+  "Mistão"
+];
+
+const acompanhamentos = [
   "Feijão Preto",
   "Feijão Mulato",
   "Feijão Macassar",
-
   "Arroz",
   "Macarrão",
   "Legumes",
@@ -158,28 +173,107 @@ const itens = [
 ];
 
 const selecionados = [];
+const carnesSelecionadas = [];
+
 const cardapio = document.getElementById('cardapio');
 const resumo = document.getElementById('resumo');
 
-itens.forEach(item => {
+function criarTitulo(texto) {
+
+  const titulo = document.createElement('div');
+
+  titulo.className =
+    'col-span-full text-xl font-bold text-orange-700 mt-4';
+
+  titulo.innerText = texto;
+
+  cardapio.appendChild(titulo);
+
+}
+
+criarTitulo('🍖 Escolha as carnes');
+
+carnes.forEach(item => {
 
   const botao = document.createElement('button');
 
   botao.innerText = item;
 
-  botao.className = 'border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition';
+  botao.className =
+    'border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition';
+
+  botao.onclick = () => {
+
+    if (carnesSelecionadas.includes(item)) {
+
+      carnesSelecionadas.splice(
+        carnesSelecionadas.indexOf(item),
+        1
+      );
+
+      botao.classList.remove(
+        'bg-orange-500',
+        'text-white'
+      );
+
+    } else {
+
+      carnesSelecionadas.push(item);
+
+      botao.classList.add(
+        'bg-orange-500',
+        'text-white'
+      );
+
+    }
+
+    atualizarResumo();
+    calcularTotal();
+
+  };
+
+  cardapio.appendChild(botao);
+
+});
+
+criarTitulo('🍛 Acompanhamentos');
+
+acompanhamentos.forEach(item => {
+
+  const botao = document.createElement('button');
+
+  botao.innerText = item;
+
+  botao.className =
+    'border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition';
 
   botao.onclick = () => {
 
     if (selecionados.includes(item)) {
-      selecionados.splice(selecionados.indexOf(item), 1);
-      botao.classList.remove('bg-orange-500', 'text-white');
+
+      selecionados.splice(
+        selecionados.indexOf(item),
+        1
+      );
+
+      botao.classList.remove(
+        'bg-orange-500',
+        'text-white'
+      );
+
     } else {
+
       selecionados.push(item);
-      botao.classList.add('bg-orange-500', 'text-white');
+
+      botao.classList.add(
+        'bg-orange-500',
+        'text-white'
+      );
+
     }
 
     atualizarResumo();
+
   };
 
   cardapio.appendChild(botao);
@@ -190,13 +284,27 @@ function atualizarResumo() {
 
   resumo.innerHTML = '';
 
+  carnesSelecionadas.forEach(item => {
+
+    const li = document.createElement('li');
+
+    li.className =
+      'bg-white border rounded-xl p-3';
+
+    li.innerText = '🍖 ' + item;
+
+    resumo.appendChild(li);
+
+  });
+
   selecionados.forEach(item => {
 
     const li = document.createElement('li');
 
-    li.className = 'bg-white border rounded-xl p-3';
+    li.className =
+      'bg-white border rounded-xl p-3';
 
-    li.innerText = '🍽️ ' + item;
+    li.innerText = '🍛 ' + item;
 
     resumo.appendChild(li);
 
@@ -206,73 +314,163 @@ function atualizarResumo() {
 
 function mostrarEndereco() {
 
-  const tipo = document.getElementById('tipoEntrega').value;
-  const endereco = document.getElementById('endereco');
+  const tipo =
+    document.getElementById('tipoEntrega').value;
+
+  const endereco =
+    document.getElementById('endereco');
 
   if (tipo === 'Retirada') {
+
     endereco.style.display = 'none';
+
   } else {
+
     endereco.style.display = 'block';
+
   }
 
 }
 
 function calcularTotal() {
 
-  const valorAlmoco = Number(document.getElementById('tipoAlmoco').value);
-  const tipoEntrega = document.getElementById('tipoEntrega').value;
+  const valorAlmoco =
+    Number(
+      document.getElementById('tipoAlmoco').value
+    );
+
+  const tipoEntrega =
+    document.getElementById('tipoEntrega').value;
 
   let total = valorAlmoco;
 
   if (tipoEntrega === 'Entrega') {
+
     total += 2;
+
   }
 
-  document.getElementById('total').innerText = total.toFixed(2);
+  if (carnesSelecionadas.length > 1) {
+
+    total +=
+      (carnesSelecionadas.length - 1) * 2;
+
+  }
+
+  document.getElementById('total').innerText =
+    total.toFixed(2);
 
 }
 
 function enviarPedido() {
 
-  const nome = document.getElementById('nome').value;
-  const telefone = document.getElementById('telefone').value;
-  const tipoAlmoco = document.getElementById('tipoAlmoco');
-  const valor = tipoAlmoco.value;
-  const textoAlmoco = tipoAlmoco.options[tipoAlmoco.selectedIndex].text;
-  const tipoEntrega = document.getElementById('tipoEntrega').value;
-  const endereco = document.getElementById('endereco').value;
-  const pagamento = document.getElementById('pagamento').value;
+  const nome =
+    document.getElementById('nome').value;
 
-  let total = Number(valor);
+  const telefone =
+    document.getElementById('telefone').value;
+
+  const tipoAlmoco =
+    document.getElementById('tipoAlmoco');
+
+  const valor =
+    Number(tipoAlmoco.value);
+
+  const textoAlmoco =
+    tipoAlmoco.options[
+      tipoAlmoco.selectedIndex
+    ].text;
+
+  const tipoEntrega =
+    document.getElementById('tipoEntrega').value;
+
+  const endereco =
+    document.getElementById('endereco').value;
+
+  const pagamento =
+    document.getElementById('pagamento').value;
+
+  const observacao =
+    document.getElementById('observacao').value;
+
+  let total = valor;
 
   if (tipoEntrega === 'Entrega') {
+
     total += 2;
+
   }
 
-  let mensagem = `🍛 PEDIDO - SANDRA REFEIÇÕES\n\n`;
+  if (carnesSelecionadas.length > 1) {
+
+    total +=
+      (carnesSelecionadas.length - 1) * 2;
+
+  }
+
+  let mensagem =
+    `🍛 PEDIDO - SANDRA REFEIÇÕES\n\n`;
 
   mensagem += `👤 Nome: ${nome}\n`;
+
   mensagem += `📞 Telefone: ${telefone}\n`;
+
   mensagem += `🍽️ ${textoAlmoco}\n`;
+
   mensagem += `🚚 ${tipoEntrega}\n`;
 
   if (tipoEntrega === 'Entrega') {
-    mensagem += `📍 Endereço: ${endereco}\n`;
-    mensagem += `🛵 Taxa entrega: R$ 2,00\n`;
+
+    mensagem +=
+      `📍 Endereço: ${endereco}\n`;
+
+    mensagem +=
+      `🛵 Taxa entrega: R$ 2,00\n`;
+
   }
 
-  mensagem += `💳 Pagamento: ${pagamento}\n`;
-  mensagem += `💰 Total: R$ ${total.toFixed(2)}\n\n`;
+  if (carnesSelecionadas.length > 1) {
 
-  mensagem += `🍽️ ITENS:\n`;
+    mensagem +=
+      `➕ Carne extra: R$ ${
+        (carnesSelecionadas.length - 1) * 2
+      },00\n`;
+
+  }
+
+  mensagem +=
+    `💳 Pagamento: ${pagamento}\n`;
+
+  if (observacao.trim() !== '') {
+
+    mensagem +=
+      `📝 Observação: ${observacao}\n`;
+
+  }
+
+  mensagem +=
+    `💰 Total: R$ ${total.toFixed(2)}\n\n`;
+
+  mensagem += `🍖 CARNES:\n`;
+
+  carnesSelecionadas.forEach(item => {
+
+    mensagem += `- ${item}\n`;
+
+  });
+
+  mensagem += `\n🍛 ACOMPANHAMENTOS:\n`;
 
   selecionados.forEach(item => {
+
     mensagem += `- ${item}\n`;
+
   });
 
   const numero = '5581985427194';
 
-  const link = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+  const link =
+    `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
 
   window.open(link, '_blank');
 
