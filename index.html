@@ -1,499 +1,90 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sandra Refeições</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<!-- CAMPOS OBRIGATÓRIOS -->
 
-<body class="bg-orange-50">
+<input
+  type="text"
+  id="nome"
+  placeholder="Nome do cliente"
+  required
+  class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
 
-<div class="max-w-6xl mx-auto p-5">
+<input
+  type="tel"
+  id="telefone"
+  placeholder="Telefone"
+  required
+  class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
 
-  <div class="bg-orange-600 text-white rounded-3xl p-8 text-center shadow-xl">
-    <h1 class="text-5xl font-black">Sandra Refeições</h1>
-    <p class="mt-2 text-lg">Produção diária de almoço 🍛</p>
-  </div>
+<textarea
+  id="endereco"
+  rows="3"
+  placeholder="Digite o endereço completo"
+  required
+  class="w-full border-2 border-orange-200 rounded-2xl p-4"
+></textarea>
 
-  <div class="grid lg:grid-cols-2 gap-8 mt-8">
 
-    <div class="bg-white rounded-3xl shadow-xl p-6">
 
-      <h2 class="text-3xl font-bold text-orange-600 mb-6">
-        Escolha seu almoço
-      </h2>
+<!-- TROCAR GARFO POR TALHER -->
 
-      <div class="mb-5">
-        <label class="font-bold text-gray-700 block mb-2">
-          Tipo de almoço
-        </label>
+<select
+  id="garfo"
+  class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+  <option value="Sim">Talher: Sim</option>
+  <option value="Não">Talher: Não</option>
+</select>
 
-        <select
-          id="tipoAlmoco"
-          onchange="calcularTotal()"
-          class="w-full border-2 border-orange-200 rounded-2xl p-4"
-        >
-          <option value="12">Almoço R$ 12</option>
-          <option value="15">Almoço R$ 15</option>
-        </select>
-      </div>
 
-      <div id="cardapio" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
 
-    </div>
+<!-- TROCAR TEXTO DA CARNE EXTRA -->
 
-    <div class="bg-white rounded-3xl shadow-xl p-6">
+<p class="text-lg">
+  Carne extra: <strong>+R$ 3,00 cada</strong>
+</p>
 
-      <h2 class="text-3xl font-bold text-orange-600 mb-6">
-        Dados do Cliente
-      </h2>
 
-      <div class="space-y-4">
 
-        <input
-          type="text"
-          id="nome"
-          placeholder="Nome do cliente"
-          class="w-full border-2 border-orange-200 rounded-2xl p-4"
-        >
+<!-- TROCAR NO CALCULO -->
 
-        <input
-          type="tel"
-          id="telefone"
-          placeholder="Telefone"
-          class="w-full border-2 border-orange-200 rounded-2xl p-4"
-        >
+if (carnesSelecionadas.length > 1) {
 
-        <select
-          id="tipoEntrega"
-          onchange="mostrarEndereco(); calcularTotal();"
-          class="w-full border-2 border-orange-200 rounded-2xl p-4"
-        >
-          <option value="Entrega">Entrega</option>
-          <option value="Retirada">Retirada</option>
-        </select>
-
-        <textarea
-          id="endereco"
-          rows="3"
-          placeholder="Digite o endereço completo"
-          class="w-full border-2 border-orange-200 rounded-2xl p-4"
-        ></textarea>
-
-        <select
-          id="pagamento"
-          class="w-full border-2 border-orange-200 rounded-2xl p-4"
-        >
-          <option>Pix</option>
-          <option>Crédito</option>
-          <option>Débito</option>
-          <option>Dinheiro</option>
-        </select>
-
-        <select
-          id="garfo"
-          class="w-full border-2 border-orange-200 rounded-2xl p-4"
-        >
-          <option value="Sim">Vai querer garfo</option>
-          <option value="Não">Sem garfo</option>
-        </select>
-
-        <textarea
-          id="observacao"
-          rows="3"
-          placeholder="Observação do pedido"
-          class="w-full border-2 border-orange-200 rounded-2xl p-4"
-        ></textarea>
-
-        <div class="bg-orange-50 border-2 border-orange-200 rounded-3xl p-5">
-
-          <h3 class="text-2xl font-bold text-orange-700 mb-4">
-            Resumo do Pedido
-          </h3>
-
-          <ul id="resumo" class="space-y-2"></ul>
-
-          <div class="mt-5 border-t pt-4">
-            <p class="text-lg">
-              Taxa de entrega: <strong>R$ 2,00</strong>
-            </p>
-
-            <p class="text-lg">
-              Carne extra: <strong>+R$ 2,00 cada</strong>
-            </p>
-
-            <p class="text-2xl font-black text-orange-700 mt-2">
-              Total: R$ <span id="total">14.00</span>
-            </p>
-          </div>
-
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-4">
-
-          <button
-            onclick="enviarPedido()"
-            class="bg-green-500 hover:bg-green-600 text-white font-bold p-5 rounded-2xl"
-          >
-            Enviar no WhatsApp
-          </button>
-
-          <button
-            onclick="window.print()"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-bold p-5 rounded-2xl"
-          >
-            Imprimir Pedido
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-<script>
-
-const carnes = [
-  "Mistão (Frango, Filé Suíno e Toscana)",
-  "Galinha Guisada",
-  "Frango na Chapa",
-  "Filé de Peixe",
-  "Bife ao Molho",
-  "Frango à Milanesa",
-  "Strogonoff"
-];
-
-const acompanhamentos = [
-  "Feijão Preto",
-  "Feijão Mulato",
-  "Feijão Macassar",
-  "Arroz",
-  "Macarrão",
-  "Legumes",
-  "Vinagrete",
-  "Purê de Batata Inglesa",
-  "Farofa"
-];
-
-const selecionados = [];
-const carnesSelecionadas = [];
-
-const cardapio = document.getElementById('cardapio');
-const resumo = document.getElementById('resumo');
-
-function criarTitulo(texto) {
-
-  const titulo = document.createElement('div');
-
-  titulo.className =
-    'col-span-full text-xl font-bold text-orange-700 mt-4';
-
-  titulo.innerText = texto;
-
-  cardapio.appendChild(titulo);
+  total +=
+    (carnesSelecionadas.length - 1) * 3;
 
 }
 
-criarTitulo('🍖 Escolha as carnes');
 
-carnes.forEach(item => {
 
-  const botao = document.createElement('button');
+<!-- TROCAR NA MENSAGEM -->
 
-  botao.innerText = item;
-
-  botao.className =
-    'border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition';
-
-  botao.onclick = () => {
-
-    if (carnesSelecionadas.includes(item)) {
-
-      carnesSelecionadas.splice(
-        carnesSelecionadas.indexOf(item),
-        1
-      );
-
-      botao.classList.remove(
-        'bg-orange-500',
-        'text-white'
-      );
-
-    } else {
-
-      carnesSelecionadas.push(item);
-
-      botao.classList.add(
-        'bg-orange-500',
-        'text-white'
-      );
-
-    }
-
-    atualizarResumo();
-    calcularTotal();
-
-  };
-
-  cardapio.appendChild(botao);
-
-});
-
-criarTitulo('🍛 Acompanhamentos');
-
-acompanhamentos.forEach(item => {
-
-  const botao = document.createElement('button');
-
-  botao.innerText = item;
-
-  botao.className =
-    'border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition';
-
-  botao.onclick = () => {
-
-    if (selecionados.includes(item)) {
-
-      selecionados.splice(
-        selecionados.indexOf(item),
-        1
-      );
-
-      botao.classList.remove(
-        'bg-orange-500',
-        'text-white'
-      );
-
-    } else {
-
-      selecionados.push(item);
-
-      botao.classList.add(
-        'bg-orange-500',
-        'text-white'
-      );
-
-    }
-
-    atualizarResumo();
-
-  };
-
-  cardapio.appendChild(botao);
-
-});
-
-function atualizarResumo() {
-
-  resumo.innerHTML = '';
-
-  carnesSelecionadas.forEach(item => {
-
-    const li = document.createElement('li');
-
-    li.className =
-      'bg-white border rounded-xl p-3';
-
-    li.innerText = '🍖 ' + item;
-
-    resumo.appendChild(li);
-
-  });
-
-  selecionados.forEach(item => {
-
-    const li = document.createElement('li');
-
-    li.className =
-      'bg-white border rounded-xl p-3';
-
-    li.innerText = '🍛 ' + item;
-
-    resumo.appendChild(li);
-
-  });
-
-}
-
-function mostrarEndereco() {
-
-  const tipo =
-    document.getElementById('tipoEntrega').value;
-
-  const endereco =
-    document.getElementById('endereco');
-
-  if (tipo === 'Retirada') {
-
-    endereco.style.display = 'none';
-
-  } else {
-
-    endereco.style.display = 'block';
-
-  }
-
-}
-
-function calcularTotal() {
-
-  const valorAlmoco =
-    Number(
-      document.getElementById('tipoAlmoco').value
-    );
-
-  const tipoEntrega =
-    document.getElementById('tipoEntrega').value;
-
-  let total = valorAlmoco;
-
-  if (tipoEntrega === 'Entrega') {
-
-    total += 2;
-
-  }
-
-  if (carnesSelecionadas.length > 1) {
-
-    total +=
-      (carnesSelecionadas.length - 1) * 2;
-
-  }
-
-  document.getElementById('total').innerText =
-    total.toFixed(2);
-
-}
-
-function enviarPedido() {
-
-  const nome =
-    document.getElementById('nome').value;
-
-  const telefone =
-    document.getElementById('telefone').value;
-
-  const tipoAlmoco =
-    document.getElementById('tipoAlmoco');
-
-  const valor =
-    Number(tipoAlmoco.value);
-
-  const textoAlmoco =
-    tipoAlmoco.options[
-      tipoAlmoco.selectedIndex
-    ].text;
-
-  const tipoEntrega =
-    document.getElementById('tipoEntrega').value;
-
-  const endereco =
-    document.getElementById('endereco').value;
-
-  const pagamento =
-    document.getElementById('pagamento').value;
-
-  const garfo =
-    document.getElementById('garfo').value;
-
-  const observacao =
-    document.getElementById('observacao').value;
-
-  let total = valor;
-
-  if (tipoEntrega === 'Entrega') {
-
-    total += 2;
-
-  }
-
-  if (carnesSelecionadas.length > 1) {
-
-    total +=
-      (carnesSelecionadas.length - 1) * 2;
-
-  }
-
-  let mensagem =
-    `🍛 PEDIDO - SANDRA REFEIÇÕES\n\n`;
-
-  mensagem += `👤 Nome: ${nome}\n`;
-
-  mensagem += `📞 Telefone: ${telefone}\n`;
-
-  mensagem += `🍽️ ${textoAlmoco}\n`;
-
-  mensagem += `🚚 ${tipoEntrega}\n`;
-
-  if (tipoEntrega === 'Entrega') {
-
-    mensagem +=
-      `📍 Endereço: ${endereco}\n`;
-
-    mensagem +=
-      `🛵 Taxa entrega: R$ 2,00\n`;
-
-  }
-
-  if (carnesSelecionadas.length > 1) {
-
-    mensagem +=
-      `➕ Carne extra: R$ ${
-        (carnesSelecionadas.length - 1) * 2
-      },00\n`;
-
-  }
+if (carnesSelecionadas.length > 1) {
 
   mensagem +=
-    `💳 Pagamento: ${pagamento}\n`;
-
-  mensagem +=
-    `🍴 Garfo: ${garfo}\n`;
-
-  if (observacao.trim() !== '') {
-
-    mensagem +=
-      `📝 Observação: ${observacao}\n`;
-
-  }
-
-  mensagem +=
-    `💰 Total: R$ ${total.toFixed(2)}\n\n`;
-
-  mensagem += `🍖 CARNES:\n`;
-
-  carnesSelecionadas.forEach(item => {
-
-    mensagem += `- ${item}\n`;
-
-  });
-
-  mensagem += `\n🍛 ACOMPANHAMENTOS:\n`;
-
-  selecionados.forEach(item => {
-
-    mensagem += `- ${item}\n`;
-
-  });
-
-  const numero = '5581985427194';
-
-  const link =
-    `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
-
-  window.open(link, '_blank');
+    `➕ Carne extra: R$ ${
+      (carnesSelecionadas.length - 1) * 3
+    },00\n`;
 
 }
 
-calcularTotal();
-mostrarEndereco();
 
-</script>
 
-</body>
-</html>
+<!-- VALIDAR CAMPOS OBRIGATÓRIOS -->
+
+if (
+  nome.trim() === '' ||
+  telefone.trim() === '' ||
+  (
+    tipoEntrega === 'Entrega' &&
+    endereco.trim() === ''
+  )
+) {
+
+  alert(
+    'Preencha nome, telefone e endereço.'
+  );
+
+  return;
+
+}
