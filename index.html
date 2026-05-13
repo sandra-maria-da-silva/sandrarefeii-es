@@ -91,6 +91,14 @@
           <option>Dinheiro</option>
         </select>
 
+        <select
+          id="garfo"
+          class="w-full border-2 border-orange-200 rounded-2xl p-4"
+        >
+          <option value="Sim">Vai querer garfo</option>
+          <option value="Não">Sem garfo</option>
+        </select>
+
         <textarea
           id="observacao"
           rows="3"
@@ -151,13 +159,13 @@
 <script>
 
 const carnes = [
-  "Bife ao Molho",
+  "Mistão (Frango, Filé Suíno e Toscana)",
   "Galinha Guisada",
-  "Strogonoff de Frango",
   "Frango na Chapa",
-  "Fígado Acebolado",
   "Filé de Peixe",
-  "Mistão"
+  "Bife ao Molho",
+  "Frango à Milanesa",
+  "Strogonoff"
 ];
 
 const acompanhamentos = [
@@ -390,6 +398,9 @@ function enviarPedido() {
   const pagamento =
     document.getElementById('pagamento').value;
 
+  const garfo =
+    document.getElementById('garfo').value;
+
   const observacao =
     document.getElementById('observacao').value;
 
@@ -440,6 +451,9 @@ function enviarPedido() {
 
   mensagem +=
     `💳 Pagamento: ${pagamento}\n`;
+
+  mensagem +=
+    `🍴 Garfo: ${garfo}\n`;
 
   if (observacao.trim() !== '') {
 
