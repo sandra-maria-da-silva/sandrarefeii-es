@@ -180,23 +180,51 @@ Imprimir Pedido
 
 const carnes = [
 
-"Galinha Guisada",
-"Filé de Peixe",
-"Fricassê de Frango",
-"Frango na Chapa",
-"Charque Frita",
-"Bisteca Suína",
-"Fígado Acebolado",
-"Arrumadinho"
+{
+nome: "Galinha Guisada"
+},
+
+{
+nome: "Filé de Peixe"
+},
+
+{
+nome: "Fricassê de Frango"
+},
+
+{
+nome: "Frango na Chapa"
+},
+
+{
+nome: "Charque Frita"
+},
+
+{
+nome: "Bisteca Suína"
+},
+
+{
+nome: "Fígado Acebolado"
+},
+
+{
+nome: "Arrumadinho",
+descricao: "Macassar, Arroz, Vinagrete e Charque"
+}
 
 ];
 
 const acompanhamentos = [
 
+"Feijão Mulato",
 "Feijão Macassar",
+"Feijão Preto",
 "Arroz",
+"Macarrão",
+"Legumes",
 "Vinagrete",
-"Charque"
+"Purê de Batata Inglesa"
 
 ];
 
@@ -225,17 +253,20 @@ carnes.forEach(item => {
 
 const botao = document.createElement("button");
 
-botao.innerText = item;
-
 botao.className =
-"border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition";
+"border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition text-left";
+
+botao.innerHTML = `
+<div class="font-bold">${item.nome}</div>
+${item.descricao ? `<div class="text-sm text-gray-600 mt-1">${item.descricao}</div>` : ""}
+`;
 
 botao.onclick = () => {
 
-if(carnesSelecionadas.includes(item)){
+if(carnesSelecionadas.includes(item.nome)){
 
 carnesSelecionadas.splice(
-carnesSelecionadas.indexOf(item),
+carnesSelecionadas.indexOf(item.nome),
 1
 );
 
@@ -246,7 +277,7 @@ botao.classList.remove(
 
 }else{
 
-carnesSelecionadas.push(item);
+carnesSelecionadas.push(item.nome);
 
 botao.classList.add(
 "bg-orange-500",
