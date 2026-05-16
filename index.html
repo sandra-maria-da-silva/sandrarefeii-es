@@ -181,15 +181,11 @@ Imprimir Pedido
 const carnes = [
 
 {
+nome: "Cupim Acebolado"
+},
+
+{
 nome: "Galinha Guisada"
-},
-
-{
-nome: "Filé de Peixe"
-},
-
-{
-nome: "Fricassê de Frango"
 },
 
 {
@@ -197,20 +193,15 @@ nome: "Frango na Chapa"
 },
 
 {
-nome: "Charque Frita"
+nome: "Filé de Peixe"
 },
 
 {
-nome: "Bisteca Suína"
+nome: "Bisteca"
 },
 
 {
-nome: "Fígado Acebolado"
-},
-
-{
-nome: "Arrumadinho",
-descricao: "Macassar, Arroz, Vinagrete e Charque"
+nome: "Linguicinha com Fritas"
 }
 
 ];
@@ -258,7 +249,6 @@ botao.className =
 
 botao.innerHTML = `
 <div class="font-bold">${item.nome}</div>
-${item.descricao ? `<div class="text-sm text-gray-600 mt-1">${item.descricao}</div>` : ""}
 `;
 
 botao.onclick = () => {
