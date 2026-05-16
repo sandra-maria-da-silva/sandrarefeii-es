@@ -37,10 +37,8 @@ id="tipoAlmoco"
 onchange="calcularTotal()"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 >
-
 <option value="12">Almoço R$ 12</option>
 <option value="15">Almoço R$ 15</option>
-
 </select>
 
 </div>
@@ -61,7 +59,6 @@ Dados do Cliente
 type="text"
 id="nome"
 placeholder="Nome do cliente"
-required
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 />
 
@@ -69,7 +66,6 @@ class="w-full border-2 border-orange-200 rounded-2xl p-4"
 type="tel"
 id="telefone"
 placeholder="Telefone"
-required
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 />
 
@@ -78,10 +74,8 @@ id="tipoEntrega"
 onchange="mostrarEndereco(); calcularTotal();"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 >
-
 <option value="Entrega">Entrega</option>
 <option value="Retirada">Retirada</option>
-
 </select>
 
 <textarea
@@ -95,22 +89,18 @@ class="w-full border-2 border-orange-200 rounded-2xl p-4"
 id="pagamento"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 >
-
 <option>Pix</option>
 <option>Crédito</option>
 <option>Débito</option>
 <option>Dinheiro</option>
-
 </select>
 
 <select
 id="garfo"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 >
-
 <option value="Sim">Talher: Sim</option>
 <option value="Não">Talher: Não</option>
-
 </select>
 
 <textarea
@@ -152,18 +142,14 @@ Total: R$ <span id="total">14.00</span>
 onclick="enviarPedido()"
 class="bg-green-500 hover:bg-green-600 text-white font-bold p-5 rounded-2xl"
 >
-
 Enviar no WhatsApp
-
 </button>
 
 <button
 onclick="window.print()"
 class="bg-blue-500 hover:bg-blue-600 text-white font-bold p-5 rounded-2xl"
 >
-
 Imprimir Pedido
-
 </button>
 
 </div>
@@ -179,35 +165,15 @@ Imprimir Pedido
 <script>
 
 const carnes = [
-
-{
-nome: "Cupim Acebolado"
-},
-
-{
-nome: "Galinha Guisada"
-},
-
-{
-nome: "Frango na Chapa"
-},
-
-{
-nome: "Filé de Peixe"
-},
-
-{
-nome: "Bisteca"
-},
-
-{
-nome: "Linguicinha com Fritas"
-}
-
+"Cupim Acebolado",
+"Galinha Guisada",
+"Frango na Chapa",
+"Filé de Peixe",
+"Bisteca",
+"Linguicinha com Fritas"
 ];
 
 const acompanhamentos = [
-
 "Feijão Mulato",
 "Feijão Macassar",
 "Feijão Preto",
@@ -216,7 +182,6 @@ const acompanhamentos = [
 "Legumes",
 "Vinagrete",
 "Purê de Batata Inglesa"
-
 ];
 
 const selecionados = [];
@@ -244,19 +209,17 @@ carnes.forEach(item => {
 
 const botao = document.createElement("button");
 
-botao.className =
-"border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition text-left";
+botao.innerText = item;
 
-botao.innerHTML = `
-<div class="font-bold">${item.nome}</div>
-`;
+botao.className =
+"border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition";
 
 botao.onclick = () => {
 
-if(carnesSelecionadas.includes(item.nome)){
+if(carnesSelecionadas.includes(item)){
 
 carnesSelecionadas.splice(
-carnesSelecionadas.indexOf(item.nome),
+carnesSelecionadas.indexOf(item),
 1
 );
 
@@ -267,7 +230,7 @@ botao.classList.remove(
 
 }else{
 
-carnesSelecionadas.push(item.nome);
+carnesSelecionadas.push(item);
 
 botao.classList.add(
 "bg-orange-500",
@@ -384,9 +347,7 @@ endereco.style.display = "block";
 function calcularTotal(){
 
 const valorAlmoco =
-Number(
-document.getElementById("tipoAlmoco").value
-);
+Number(document.getElementById("tipoAlmoco").value);
 
 const tipoEntrega =
 document.getElementById("tipoEntrega").value;
@@ -394,16 +355,11 @@ document.getElementById("tipoEntrega").value;
 let total = valorAlmoco;
 
 if(tipoEntrega === "Entrega"){
-
 total += 2;
-
 }
 
 if(carnesSelecionadas.length > 1){
-
-total +=
-(carnesSelecionadas.length - 1) * 3;
-
+total += (carnesSelecionadas.length - 1) * 3;
 }
 
 document.getElementById("total").innerText =
@@ -419,125 +375,40 @@ document.getElementById("nome").value;
 const telefone =
 document.getElementById("telefone").value;
 
-const tipoAlmoco =
-document.getElementById("tipoAlmoco");
-
-const valor =
-Number(tipoAlmoco.value);
-
-const textoAlmoco =
-tipoAlmoco.options[
-tipoAlmoco.selectedIndex
-].text;
-
 const tipoEntrega =
 document.getElementById("tipoEntrega").value;
 
 const endereco =
 document.getElementById("endereco").value;
 
-const pagamento =
-document.getElementById("pagamento").value;
-
-const garfo =
-document.getElementById("garfo").value;
-
-const observacao =
-document.getElementById("observacao").value;
-
 if(
 nome.trim() === "" ||
 telefone.trim() === "" ||
-(
-tipoEntrega === "Entrega" &&
-endereco.trim() === ""
-)
+(tipoEntrega === "Entrega" && endereco.trim() === "")
 ){
-
-alert(
-"Preencha nome, telefone e endereço."
-);
-
+alert("Preencha os campos obrigatórios.");
 return;
-
-}
-
-let total = valor;
-
-if(tipoEntrega === "Entrega"){
-
-total += 2;
-
-}
-
-if(carnesSelecionadas.length > 1){
-
-total +=
-(carnesSelecionadas.length - 1) * 3;
-
 }
 
 let mensagem =
 `🍛 PEDIDO - SANDRA REFEIÇÕES\n\n`;
 
 mensagem += `👤 Nome: ${nome}\n`;
-
 mensagem += `📞 Telefone: ${telefone}\n`;
 
-mensagem += `🍽️ ${textoAlmoco}\n`;
-
-mensagem += `🚚 ${tipoEntrega}\n`;
-
-if(tipoEntrega === "Entrega"){
-
-mensagem +=
-`📍 Endereço: ${endereco}\n`;
-
-mensagem +=
-`🛵 Taxa entrega: R$ 2,00\n`;
-
-}
-
-if(carnesSelecionadas.length > 1){
-
-mensagem +=
-`➕ Carne extra: R$ ${
-(carnesSelecionadas.length - 1) * 3
-},00\n`;
-
-}
-
-mensagem +=
-`💳 Pagamento: ${pagamento}\n`;
-
-mensagem +=
-`🍴 Talher: ${garfo}\n`;
-
-if(observacao.trim() !== ""){
-
-mensagem +=
-`📝 Observação: ${observacao}\n`;
-
-}
-
-mensagem +=
-`💰 Total: R$ ${total.toFixed(2)}\n\n`;
-
-mensagem += `🍖 CARNES:\n`;
+mensagem += `\n🍖 CARNES:\n`;
 
 carnesSelecionadas.forEach(item => {
-
 mensagem += `- ${item}\n`;
-
 });
 
 mensagem += `\n🍛 ACOMPANHAMENTOS:\n`;
 
 selecionados.forEach(item => {
-
 mensagem += `- ${item}\n`;
-
 });
+
+mensagem += `\n💰 Total: R$ ${document.getElementById("total").innerText}`;
 
 const numero = "5581985427194";
 
