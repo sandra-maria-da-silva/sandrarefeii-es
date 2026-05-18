@@ -172,6 +172,7 @@ type="text"
 id="nome"
 placeholder="Nome do cliente"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
+required
 >
 
 <input
@@ -179,6 +180,7 @@ type="tel"
 id="telefone"
 placeholder="Telefone"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
+required
 >
 
 <select
@@ -232,17 +234,22 @@ id="talher"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 >
 
-<option>Talher: Sim</option>
-<option>Talher: Não</option>
+<option value="Talher: Sim">
+Talher: Sim
+</option>
+
+<option value="Talher: Não">
+Talher: Não
+</option>
 
 </select>
 
-<!-- OBS -->
+<!-- OBSERVAÇÃO -->
 
 <textarea
 id="observacao"
 rows="3"
-placeholder="Observação"
+placeholder="Observação do pedido"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 ></textarea>
 
@@ -251,7 +258,7 @@ class="w-full border-2 border-orange-200 rounded-2xl p-4"
 <div class="bg-orange-50 border-2 border-orange-200 rounded-3xl p-5">
 
 <p class="text-lg">
-Taxa entrega:
+Taxa de entrega:
 <strong>
 R$ 2,00
 </strong>
@@ -264,7 +271,7 @@ Carne extra:
 </strong>
 </p>
 
-<p class="text-2xl font-black text-orange-700 mt-4">
+<p class="text-3xl font-black text-orange-700 mt-4">
 
 Total:
 R$
