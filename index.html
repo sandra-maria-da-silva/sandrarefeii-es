@@ -9,22 +9,35 @@
 
 </head>
 
-<body class="bg-orange-50">
+<body class="bg-orange-50 min-h-screen">
 
-<div class="max-w-6xl mx-auto p-5">
+<div class="max-w-7xl mx-auto p-5">
+
+<!-- TOPO -->
 
 <div class="bg-orange-600 text-white rounded-3xl p-8 text-center shadow-xl">
-<h1 class="text-5xl font-black">Sandra Refeições</h1>
-<p class="mt-2 text-lg">Produção diária de almoço 🍛</p>
+
+<h1 class="text-5xl font-black">
+Sandra Refeições
+</h1>
+
+<p class="mt-2 text-lg">
+Produção diária de almoço 🍛
+</p>
+
 </div>
 
 <div class="grid lg:grid-cols-2 gap-8 mt-8">
 
-<div class="bg-white rounded-3xl shadow-xl p-6">
+<!-- CARDÁPIO -->
+
+<div class="bg-white rounded-3xl shadow-xl p-6 h-fit">
 
 <h2 class="text-3xl font-bold text-orange-600 mb-6">
 Escolha seu almoço
 </h2>
+
+<!-- TIPO ALMOÇO -->
 
 <div class="mb-5">
 
@@ -37,15 +50,29 @@ id="tipoAlmoco"
 onchange="calcularTotal()"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 >
-<option value="12">Almoço R$ 12</option>
-<option value="15">Almoço R$ 15</option>
+
+<option value="15">
+Almoço R$ 15
+</option>
+
+<option value="18">
+Almoço R$ 18
+</option>
+
 </select>
 
 </div>
 
-<div id="cardapio" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+<!-- CARDÁPIO -->
+
+<div
+id="cardapio"
+class="grid grid-cols-1 sm:grid-cols-2 gap-4"
+></div>
 
 </div>
+
+<!-- CLIENTE -->
 
 <div class="bg-white rounded-3xl shadow-xl p-6">
 
@@ -55,28 +82,54 @@ Dados do Cliente
 
 <div class="space-y-4">
 
+<!-- NOME -->
+
 <input
 type="text"
 id="nome"
 placeholder="Nome do cliente"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
+required
 />
+
+<!-- TELEFONE -->
 
 <input
 type="tel"
 id="telefone"
 placeholder="Telefone"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
+required
 />
+
+<!-- ENTREGA -->
 
 <select
 id="tipoEntrega"
 onchange="mostrarEndereco(); calcularTotal();"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 >
-<option value="Entrega">Entrega</option>
-<option value="Retirada">Retirada</option>
+
+<option value="Entrega" selected>
+Entrega
+</option>
+
+<option value="Retirada">
+Retirada
+</option>
+
 </select>
+
+<!-- ENDEREÇO -->
+
+<div
+id="boxEndereco"
+class="w-full block"
+>
+
+<label class="block font-bold text-gray-700 mb-2 mt-2">
+Endereço
+</label>
 
 <textarea
 id="endereco"
@@ -85,23 +138,51 @@ placeholder="Digite o endereço completo"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 ></textarea>
 
+</div>
+
+<!-- PAGAMENTO -->
+
 <select
 id="pagamento"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 >
-<option>Pix</option>
-<option>Crédito</option>
-<option>Débito</option>
-<option>Dinheiro</option>
+
+<option>
+Pix
+</option>
+
+<option>
+Crédito
+</option>
+
+<option>
+Débito
+</option>
+
+<option>
+Dinheiro
+</option>
+
 </select>
+
+<!-- TALHER -->
 
 <select
 id="garfo"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 >
-<option value="Sim">Talher: Sim</option>
-<option value="Não">Talher: Não</option>
+
+<option value="Sim">
+Talher: Sim
+</option>
+
+<option value="Não">
+Talher: Não
+</option>
+
 </select>
+
+<!-- OBSERVAÇÃO -->
 
 <textarea
 id="observacao"
@@ -109,6 +190,8 @@ rows="3"
 placeholder="Observação do pedido"
 class="w-full border-2 border-orange-200 rounded-2xl p-4"
 ></textarea>
+
+<!-- RESUMO -->
 
 <div class="bg-orange-50 border-2 border-orange-200 rounded-3xl p-5">
 
@@ -121,20 +204,44 @@ Resumo do Pedido
 <div class="mt-5 border-t pt-4">
 
 <p class="text-lg">
-Taxa de entrega: <strong>R$ 2,00</strong>
+Taxa de entrega:
+<strong>
+R$ 2,00
+</strong>
 </p>
 
 <p class="text-lg">
-Carne extra: <strong>+R$ 3,00 cada</strong>
+Carne extra:
+<strong>
++R$ 3,00 cada
+</strong>
 </p>
 
-<p class="text-2xl font-black text-orange-700 mt-2">
-Total: R$ <span id="total">14.00</span>
+<p class="text-lg font-bold text-orange-700">
+
+Valor do almoço:
+R$
+<span id="valorAlmoco">
+15.00
+</span>
+
+</p>
+
+<p class="text-3xl font-black text-orange-700 mt-3">
+
+Total:
+R$
+<span id="total">
+17.00
+</span>
+
 </p>
 
 </div>
 
 </div>
+
+<!-- BOTÕES -->
 
 <div class="grid md:grid-cols-2 gap-4">
 
@@ -142,17 +249,19 @@ Total: R$ <span id="total">14.00</span>
 onclick="enviarPedido()"
 class="bg-green-500 hover:bg-green-600 text-white font-bold p-5 rounded-2xl"
 >
+
 Enviar no WhatsApp
+
 </button>
 
 <button
 onclick="window.print()"
 class="bg-blue-500 hover:bg-blue-600 text-white font-bold p-5 rounded-2xl"
 >
-Imprimir Pedido
-</button>
 
-</div>
+Imprimir Pedido
+
+</button>
 
 </div>
 
@@ -165,15 +274,18 @@ Imprimir Pedido
 <script>
 
 const carnes = [
-"Cupim Acebolado",
-"Galinha Guisada",
+
 "Frango na Chapa",
+"Galinha Guisada",
+"Bife ao Molho",
 "Filé de Peixe",
-"Bisteca",
-"Linguicinha com Fritas"
+"Fígado Acebolado",
+"Bisteca com Barbecue"
+
 ];
 
 const acompanhamentos = [
+
 "Feijão Mulato",
 "Feijão Macassar",
 "Feijão Preto",
@@ -182,17 +294,22 @@ const acompanhamentos = [
 "Legumes",
 "Vinagrete",
 "Purê de Batata Inglesa"
+
 ];
 
-const selecionados = [];
 const carnesSelecionadas = [];
+const acompanhamentosSelecionados = [];
 
-const cardapio = document.getElementById("cardapio");
-const resumo = document.getElementById("resumo");
+const cardapio =
+document.getElementById("cardapio");
+
+const resumo =
+document.getElementById("resumo");
 
 function criarTitulo(texto){
 
-const titulo = document.createElement("div");
+const titulo =
+document.createElement("div");
 
 titulo.className =
 "col-span-full text-xl font-bold text-orange-700 mt-4";
@@ -203,11 +320,12 @@ cardapio.appendChild(titulo);
 
 }
 
-criarTitulo("🍖 Escolha as carnes");
+criarTitulo("🍖 Carnes");
 
 carnes.forEach(item => {
 
-const botao = document.createElement("button");
+const botao =
+document.createElement("button");
 
 botao.innerText = item;
 
@@ -252,7 +370,8 @@ criarTitulo("🍛 Acompanhamentos");
 
 acompanhamentos.forEach(item => {
 
-const botao = document.createElement("button");
+const botao =
+document.createElement("button");
 
 botao.innerText = item;
 
@@ -261,10 +380,10 @@ botao.className =
 
 botao.onclick = () => {
 
-if(selecionados.includes(item)){
+if(acompanhamentosSelecionados.includes(item)){
 
-selecionados.splice(
-selecionados.indexOf(item),
+acompanhamentosSelecionados.splice(
+acompanhamentosSelecionados.indexOf(item),
 1
 );
 
@@ -275,7 +394,7 @@ botao.classList.remove(
 
 }else{
 
-selecionados.push(item);
+acompanhamentosSelecionados.push(item);
 
 botao.classList.add(
 "bg-orange-500",
@@ -298,25 +417,29 @@ resumo.innerHTML = "";
 
 carnesSelecionadas.forEach(item => {
 
-const li = document.createElement("li");
+const li =
+document.createElement("li");
 
 li.className =
 "bg-white border rounded-xl p-3";
 
-li.innerText = "🍖 " + item;
+li.innerText =
+"🍖 " + item;
 
 resumo.appendChild(li);
 
 });
 
-selecionados.forEach(item => {
+acompanhamentosSelecionados.forEach(item => {
 
-const li = document.createElement("li");
+const li =
+document.createElement("li");
 
 li.className =
 "bg-white border rounded-xl p-3";
 
-li.innerText = "🍛 " + item;
+li.innerText =
+"🍛 " + item;
 
 resumo.appendChild(li);
 
@@ -329,16 +452,16 @@ function mostrarEndereco(){
 const tipo =
 document.getElementById("tipoEntrega").value;
 
-const endereco =
-document.getElementById("endereco");
+const boxEndereco =
+document.getElementById("boxEndereco");
 
 if(tipo === "Retirada"){
 
-endereco.style.display = "none";
+boxEndereco.style.display = "none";
 
 }else{
 
-endereco.style.display = "block";
+boxEndereco.style.display = "block";
 
 }
 
@@ -346,23 +469,31 @@ endereco.style.display = "block";
 
 function calcularTotal(){
 
-const valorAlmoco =
-Number(document.getElementById("tipoAlmoco").value);
+let valorAlmoco =
+Number(
+document.getElementById("tipoAlmoco").value
+);
 
-const tipoEntrega =
-document.getElementById("tipoEntrega").value;
+document.getElementById("valorAlmoco").innerHTML =
+valorAlmoco.toFixed(2);
 
 let total = valorAlmoco;
 
-if(tipoEntrega === "Entrega"){
+if(
+document.getElementById("tipoEntrega").value
+=== "Entrega"
+){
 total += 2;
 }
 
 if(carnesSelecionadas.length > 1){
-total += (carnesSelecionadas.length - 1) * 3;
+
+total +=
+(carnesSelecionadas.length - 1) * 3;
+
 }
 
-document.getElementById("total").innerText =
+document.getElementById("total").innerHTML =
 total.toFixed(2);
 
 }
@@ -370,52 +501,137 @@ total.toFixed(2);
 function enviarPedido(){
 
 const nome =
-document.getElementById("nome").value;
+document.getElementById("nome").value.trim();
 
 const telefone =
-document.getElementById("telefone").value;
-
-const tipoEntrega =
-document.getElementById("tipoEntrega").value;
+document.getElementById("telefone").value.trim();
 
 const endereco =
-document.getElementById("endereco").value;
+document.getElementById("endereco").value.trim();
+
+const entrega =
+document.getElementById("tipoEntrega").value;
+
+const pagamento =
+document.getElementById("pagamento").value;
+
+const talher =
+document.getElementById("garfo").value;
+
+const observacao =
+document.getElementById("observacao").value.trim();
+
+const valorAlmoco =
+document.getElementById("tipoAlmoco").value;
+
+const total =
+document.getElementById("total").innerText;
+
+if(nome === "" || telefone === ""){
+
+alert(
+"Preencha nome e telefone"
+);
+
+return;
+
+}
 
 if(
-nome.trim() === "" ||
-telefone.trim() === "" ||
-(tipoEntrega === "Entrega" && endereco.trim() === "")
+entrega === "Entrega"
+&& endereco === ""
 ){
-alert("Preencha os campos obrigatórios.");
+
+alert(
+"Digite o endereço completo"
+);
+
 return;
+
 }
 
 let mensagem =
 `🍛 PEDIDO - SANDRA REFEIÇÕES\n\n`;
 
-mensagem += `👤 Nome: ${nome}\n`;
-mensagem += `📞 Telefone: ${telefone}\n`;
+mensagem +=
+`👤 Nome: ${nome}\n`;
 
-mensagem += `\n🍖 CARNES:\n`;
+mensagem +=
+`📞 Telefone: ${telefone}\n`;
 
-carnesSelecionadas.forEach(item => {
+mensagem +=
+`🍽️ Almoço: R$ ${valorAlmoco}\n`;
+
+mensagem +=
+`🚚 Tipo: ${entrega}\n`;
+
+if(entrega === "Entrega"){
+
+mensagem +=
+`📍 Endereço: ${endereco}\n`;
+
+mensagem +=
+`🛵 Taxa entrega: R$ 2,00\n`;
+
+}
+
+mensagem +=
+`💳 Pagamento: ${pagamento}\n`;
+
+mensagem +=
+`🍴 Talher: ${talher}\n`;
+
+mensagem +=
+`\n🍖 CARNES:\n`;
+
+if(carnesSelecionadas.length === 0){
+
+mensagem += "- Nenhuma selecionada\n";
+
+}else{
+
+carnesSelecionadas.forEach(item=>{
+
 mensagem += `- ${item}\n`;
+
 });
 
-mensagem += `\n🍛 ACOMPANHAMENTOS:\n`;
+}
 
-selecionados.forEach(item => {
+mensagem +=
+`\n🍛 ACOMPANHAMENTOS:\n`;
+
+if(acompanhamentosSelecionados.length === 0){
+
+mensagem += "- Nenhum selecionado\n";
+
+}else{
+
+acompanhamentosSelecionados.forEach(item=>{
+
 mensagem += `- ${item}\n`;
+
 });
 
-mensagem += `\n💰 Total: R$ ${document.getElementById("total").innerText}`;
+}
 
-const numero = "5581985427194";
+if(observacao !== ""){
 
-const link =
+mensagem +=
+`\n📝 OBSERVAÇÃO:\n${observacao}\n`;
+
+}
+
+mensagem +=
+`\n💰 TOTAL: R$ ${total}`;
+
+const numero =
+"5581985427194";
+
+const url =
 `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
 
-window.open(link, "_blank");
+window.open(url, "_blank");
 
 }
 
