@@ -23,7 +23,7 @@ Sandra Refeições 🍛
 </h1>
 
 <p class="mt-3 text-lg">
-Pedidos online
+Produção diária de almoço
 </p>
 
 </div>
@@ -38,7 +38,7 @@ Pedidos online
 Escolha seu almoço
 </h2>
 
-<!-- ALMOÇO -->
+<!-- TIPO -->
 
 <label class="font-bold block mb-2">
 Tipo de almoço
@@ -100,17 +100,17 @@ Bisteca com Barbecue
 
 </div>
 
-<!-- ACOMPANHAMENTOS -->
+<!-- COMPLEMENTOS -->
 
 <h3 class="text-2xl font-bold text-orange-600 mb-4">
-🍛 Acompanhamentos
+🍛 Complementos
 </h3>
 
 <div class="grid sm:grid-cols-2 gap-4">
 
 <label class="border-2 border-orange-200 rounded-2xl p-4">
-<input type="checkbox" value="Arroz" class="acom mr-2">
-Arroz
+<input type="checkbox" value="Feijão Preto" class="acom mr-2">
+Feijão Preto
 </label>
 
 <label class="border-2 border-orange-200 rounded-2xl p-4">
@@ -119,13 +119,18 @@ Feijão Mulato
 </label>
 
 <label class="border-2 border-orange-200 rounded-2xl p-4">
-<input type="checkbox" value="Macarrão" class="acom mr-2">
-Macarrão
+<input type="checkbox" value="Feijão Macassar" class="acom mr-2">
+Feijão Macassar
 </label>
 
 <label class="border-2 border-orange-200 rounded-2xl p-4">
-<input type="checkbox" value="Purê de Batata" class="acom mr-2">
-Purê de Batata
+<input type="checkbox" value="Arroz" class="acom mr-2">
+Arroz
+</label>
+
+<label class="border-2 border-orange-200 rounded-2xl p-4">
+<input type="checkbox" value="Macarrão" class="acom mr-2">
+Macarrão
 </label>
 
 <label class="border-2 border-orange-200 rounded-2xl p-4">
@@ -136,6 +141,16 @@ Legumes
 <label class="border-2 border-orange-200 rounded-2xl p-4">
 <input type="checkbox" value="Vinagrete" class="acom mr-2">
 Vinagrete
+</label>
+
+<label class="border-2 border-orange-200 rounded-2xl p-4">
+<input type="checkbox" value="Purê de Batata Inglesa" class="acom mr-2">
+Purê de Batata Inglesa
+</label>
+
+<label class="border-2 border-orange-200 rounded-2xl p-4">
+<input type="checkbox" value="Farofa" class="acom mr-2">
+Farofa
 </label>
 
 </div>
@@ -208,6 +223,8 @@ class="w-full border-2 border-orange-200 rounded-2xl p-4"
 <option>Débito</option>
 <option>Fiado</option>
 
+</select>
+
 <!-- TALHER -->
 
 <select
@@ -277,7 +294,7 @@ onclick="window.print()"
 class="bg-blue-500 hover:bg-blue-600 text-white font-bold p-5 rounded-2xl"
 >
 
-Imprimir
+Imprimir Pedido
 
 </button>
 
@@ -295,7 +312,7 @@ Imprimir
 Painel do Dia
 </h2>
 
-<div class="grid md:grid-cols-4 gap-4">
+<div class="grid md:grid-cols-2 gap-4">
 
 <div class="bg-orange-100 rounded-2xl p-5">
 
@@ -330,38 +347,6 @@ Pedidos
 
 </div>
 
-<div class="bg-green-100 rounded-2xl p-5">
-
-<p class="font-bold">
-Junior
-</p>
-
-<p class="text-3xl font-black text-green-700">
-
-<span id="junior">
-0
-</span>
-
-</p>
-
-</div>
-
-<div class="bg-blue-100 rounded-2xl p-5">
-
-<p class="font-bold">
-Nino + Hugo
-</p>
-
-<p class="text-3xl font-black text-blue-700">
-
-<span id="outros">
-0
-</span>
-
-</p>
-
-</div>
-
 </div>
 
 <div
@@ -377,8 +362,6 @@ class="space-y-4 mt-8"
 
 let totalDia = 0;
 let quantidadePedidos = 0;
-let junior = 0;
-let outros = 0;
 
 function mostrarEndereco(){
 
@@ -458,9 +441,6 @@ document.getElementById("tipoEntrega").value;
 const pagamento =
 document.getElementById("pagamento").value;
 
-const entregador =
-document.getElementById("entregador").value;
-
 const talher =
 document.getElementById("talher").value;
 
@@ -533,9 +513,6 @@ mensagem +=
 }
 
 mensagem +=
-`🛵 Entregador: ${entregador}\n`;
-
-mensagem +=
 `💳 Pagamento: ${pagamento}\n`;
 
 mensagem +=
@@ -545,7 +522,7 @@ mensagem +=
 `\n🍖 CARNES:\n${listaCarnes}`;
 
 mensagem +=
-`\n🍛 ACOMPANHAMENTOS:\n${listaAcompanhamentos}`;
+`\n🍛 COMPLEMENTOS:\n${listaAcompanhamentos}`;
 
 if(observacao !== ""){
 
@@ -565,7 +542,6 @@ window.open(
 salvarPainel(
 nome,
 pagamento,
-entregador,
 total
 );
 
@@ -575,7 +551,6 @@ function salvarPainel(
 
 nome,
 pagamento,
-entregador,
 total
 
 ){
@@ -584,27 +559,11 @@ quantidadePedidos++;
 
 totalDia += Number(total);
 
-if(entregador === "Junior"){
-
-junior++;
-
-}else{
-
-outros++;
-
-}
-
 document.getElementById("valorTotalDia").innerText =
 totalDia.toFixed(2);
 
 document.getElementById("totalPedidos").innerText =
 quantidadePedidos;
-
-document.getElementById("junior").innerText =
-junior;
-
-document.getElementById("outros").innerText =
-outros;
 
 const lista =
 document.getElementById("listaPedidos");
@@ -620,8 +579,6 @@ div.innerHTML = `
 <p><strong>Cliente:</strong> ${nome}</p>
 
 <p><strong>Pagamento:</strong> ${pagamento}</p>
-
-<p><strong>Entregador:</strong> ${entregador}</p>
 
 <p><strong>Total:</strong> R$ ${total}</p>
 
