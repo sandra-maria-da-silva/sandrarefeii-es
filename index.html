@@ -1,1 +1,911 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+<title>Sandra Refeições</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-orange-50 min-h-screen">
+
+<div class="max-w-7xl mx-auto p-4">
+
+<!-- TOPO -->
+
+<div class="bg-orange-600 text-white rounded-3xl p-8 text-center shadow-2xl">
+
+<h1 class="text-5xl font-black">
+Sandra Refeições
+</h1>
+
+<p class="text-lg mt-2">
+Produção diária de almoço 🍛
+</p>
+
+</div>
+
+<div class="grid lg:grid-cols-2 gap-8 mt-8">
+
+<!-- CARDÁPIO -->
+
+<div class="bg-white rounded-3xl shadow-xl p-6 h-fit">
+
+<h2 class="text-3xl font-bold text-orange-600 mb-6">
+Escolha seu almoço
+</h2>
+
+<!-- TIPO -->
+
+<div class="mb-5">
+
+<label class="font-bold block mb-2">
+Tipo de almoço
+</label>
+
+<select
+id="tipoAlmoco"
+onchange="calcularTotal()"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<option value="15">
+Almoço R$ 15
+</option>
+
+<option value="18">
+Almoço R$ 18
+</option>
+
+</select>
+
+</div>
+
+<!-- CARDAPIO -->
+
+<div
+id="cardapio"
+class="grid grid-cols-1 sm:grid-cols-2 gap-4"
+></div>
+
+</div>
+
+<!-- CLIENTE -->
+
+<div class="bg-white rounded-3xl shadow-xl p-6">
+
+<h2 class="text-3xl font-bold text-orange-600 mb-6">
+Dados do Cliente
+</h2>
+
+<div class="space-y-4">
+
+<input
+type="text"
+id="nome"
+placeholder="Nome do cliente"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+required
+/>
+
+<input
+type="tel"
+id="telefone"
+placeholder="Telefone"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+required
+/>
+
+<select
+id="tipoEntrega"
+onchange="mostrarEndereco(); calcularTotal();"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<option value="Entrega">
+Entrega
+</option>
+
+<option value="Retirada">
+Retirada
+</option>
+
+</select>
+
+<!-- ENDEREÇO -->
+
+<div id="boxEndereco">
+
+<label class="block font-bold mb-2">
+Endereço
+</label>
+
+<textarea
+id="endereco"
+rows="3"
+placeholder="Digite o endereço completo"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+></textarea>
+
+</div>
+
+<!-- PAGAMENTO -->
+
+<select
+id="pagamento"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<option>Pix</option>
+<option>Dinheiro</option>
+<option>Crédito</option>
+<option>Débito</option>
+<option>Fiado</option>
+
+</select>
+
+<!-- PAGO -->
+
+<select
+id="statusPagamento"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<option value="Pago">
+Pago
+</option>
+
+<option value="Não Pago">
+Não Pago
+</option>
+
+</select>
+
+<!-- ENTREGADOR -->
+
+<select
+id="entregador"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<option value="Junior">
+Junior
+</option>
+
+<option value="Nino">
+Nino
+</option>
+
+<option value="Hugo">
+Hugo
+</option>
+
+</select>
+
+<!-- TALHER -->
+
+<select
+id="talher"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<option value="Sim">
+Talher: Sim
+</option>
+
+<option value="Não">
+Talher: Não
+</option>
+
+</select>
+
+<!-- OBS -->
+
+<textarea
+id="observacao"
+rows="3"
+placeholder="Observação"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+></textarea>
+
+<!-- RESUMO -->
+
+<div class="bg-orange-50 border-2 border-orange-200 rounded-3xl p-5">
+
+<h3 class="text-2xl font-bold text-orange-700 mb-4">
+Resumo
+</h3>
+
+<ul id="resumo" class="space-y-2"></ul>
+
+<div class="border-t mt-4 pt-4">
+
+<p class="text-lg">
+Taxa entrega:
+<strong>
+R$ 2,00
+</strong>
+</p>
+
+<p class="text-lg">
+Carne extra:
+<strong>
++R$ 3,00
+</strong>
+</p>
+
+<p class="text-lg font-bold text-orange-700">
+
+Valor almoço:
+R$
+<span id="valorAlmoco">
+15.00
+</span>
+
+</p>
+
+<p class="text-3xl font-black text-orange-700 mt-2">
+
+Total:
+R$
+<span id="total">
+17.00
+</span>
+
+</p>
+
+</div>
+
+</div>
+
+<!-- BOTÕES -->
+
+<div class="grid md:grid-cols-2 gap-4">
+
+<button
+onclick="enviarPedido()"
+class="bg-green-500 hover:bg-green-600 text-white font-bold p-5 rounded-2xl"
+>
+
+Enviar WhatsApp
+
+</button>
+
+<button
+onclick="salvarPedido()"
+class="bg-orange-500 hover:bg-orange-600 text-white font-bold p-5 rounded-2xl"
+>
+
+Salvar Pedido
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- PAINEL -->
+
+<div class="bg-white rounded-3xl shadow-xl p-6 mt-8">
+
+<h2 class="text-3xl font-bold text-orange-600 mb-6">
+Painel de Pedidos
+</h2>
+
+<div class="grid md:grid-cols-4 gap-4 mb-6">
+
+<div class="bg-green-100 rounded-2xl p-5">
+
+<p class="text-lg font-bold">
+Total Pago
+</p>
+
+<p class="text-3xl font-black text-green-700">
+
+R$
+<span id="totalPago">
+0.00
+</span>
+
+</p>
+
+</div>
+
+<div class="bg-red-100 rounded-2xl p-5">
+
+<p class="text-lg font-bold">
+Não Pago
+</p>
+
+<p class="text-3xl font-black text-red-700">
+
+R$
+<span id="totalNaoPago">
+0.00
+</span>
+
+</p>
+
+</div>
+
+<div class="bg-orange-100 rounded-2xl p-5">
+
+<p class="text-lg font-bold">
+Total Geral
+</p>
+
+<p class="text-3xl font-black text-orange-700">
+
+R$
+<span id="totalGeral">
+0.00
+</span>
+
+</p>
+
+</div>
+
+<div class="bg-blue-100 rounded-2xl p-5">
+
+<p class="text-lg font-bold">
+Pedidos
+</p>
+
+<p class="text-3xl font-black text-blue-700">
+
+<span id="quantidadePedidos">
+0
+</span>
+
+</p>
+
+</div>
+
+</div>
+
+<!-- TOTAL ENTREGADORES -->
+
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+
+<div class="bg-yellow-100 p-5 rounded-2xl">
+
+<p class="font-bold">
+Junior
+</p>
+
+<p class="text-2xl font-black">
+
+<span id="juniorTotal">
+0
+</span>
+
+Pedidos
+
+</p>
+
+</div>
+
+<div class="bg-yellow-100 p-5 rounded-2xl">
+
+<p class="font-bold">
+Nino
+</p>
+
+<p class="text-2xl font-black">
+
+<span id="ninoTotal">
+0
+</span>
+
+Pedidos
+
+</p>
+
+</div>
+
+<div class="bg-yellow-100 p-5 rounded-2xl">
+
+<p class="font-bold">
+Hugo
+</p>
+
+<p class="text-2xl font-black">
+
+<span id="hugoTotal">
+0
+</span>
+
+Pedidos
+
+</p>
+
+</div>
+
+</div>
+
+<div id="listaPedidos" class="space-y-4"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const carnes = [
+
+"Frango na Chapa",
+"Galinha Guisada",
+"Bife ao Molho",
+"Filé de Peixe",
+"Fígado Acebolado",
+"Bisteca com Barbecue"
+
+];
+
+const acompanhamentos = [
+
+"Feijão Mulato",
+"Feijão Macassar",
+"Feijão Preto",
+"Arroz",
+"Macarrão",
+"Legumes",
+"Vinagrete",
+"Purê de Batata"
+
+];
+
+const carnesSelecionadas = [];
+const acompanhamentosSelecionados = [];
+
+const cardapio =
+document.getElementById("cardapio");
+
+const resumo =
+document.getElementById("resumo");
+
+function titulo(texto){
+
+const div =
+document.createElement("div");
+
+div.className =
+"col-span-full text-xl font-bold text-orange-700 mt-4";
+
+div.innerText = texto;
+
+cardapio.appendChild(div);
+
+}
+
+titulo("🍖 Carnes");
+
+carnes.forEach(item=>{
+
+const botao =
+document.createElement("button");
+
+botao.innerText = item;
+
+botao.className =
+"border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition";
+
+botao.onclick = ()=>{
+
+if(carnesSelecionadas.includes(item)){
+
+carnesSelecionadas.splice(
+carnesSelecionadas.indexOf(item),
+1
+);
+
+botao.classList.remove(
+"bg-orange-500",
+"text-white"
+);
+
+}else{
+
+carnesSelecionadas.push(item);
+
+botao.classList.add(
+"bg-orange-500",
+"text-white"
+);
+
+}
+
+atualizarResumo();
+calcularTotal();
+
+};
+
+cardapio.appendChild(botao);
+
+});
+
+titulo("🍛 Acompanhamentos");
+
+acompanhamentos.forEach(item=>{
+
+const botao =
+document.createElement("button");
+
+botao.innerText = item;
+
+botao.className =
+"border-2 border-orange-200 rounded-2xl p-4 font-semibold hover:bg-orange-100 transition";
+
+botao.onclick = ()=>{
+
+if(acompanhamentosSelecionados.includes(item)){
+
+acompanhamentosSelecionados.splice(
+acompanhamentosSelecionados.indexOf(item),
+1
+);
+
+botao.classList.remove(
+"bg-orange-500",
+"text-white"
+);
+
+}else{
+
+acompanhamentosSelecionados.push(item);
+
+botao.classList.add(
+"bg-orange-500",
+"text-white"
+);
+
+}
+
+atualizarResumo();
+
+};
+
+cardapio.appendChild(botao);
+
+});
+
+function atualizarResumo(){
+
+resumo.innerHTML = "";
+
+carnesSelecionadas.forEach(item=>{
+
+const li =
+document.createElement("li");
+
+li.className =
+"bg-white border rounded-xl p-3";
+
+li.innerText =
+"🍖 " + item;
+
+resumo.appendChild(li);
+
+});
+
+acompanhamentosSelecionados.forEach(item=>{
+
+const li =
+document.createElement("li");
+
+li.className =
+"bg-white border rounded-xl p-3";
+
+li.innerText =
+"🍛 " + item;
+
+resumo.appendChild(li);
+
+});
+
+}
+
+function mostrarEndereco(){
+
+const tipo =
+document.getElementById("tipoEntrega").value;
+
+const box =
+document.getElementById("boxEndereco");
+
+if(tipo === "Retirada"){
+
+box.style.display = "none";
+
+}else{
+
+box.style.display = "block";
+
+}
+
+}
+
+function calcularTotal(){
+
+let valor =
+Number(
+document.getElementById("tipoAlmoco").value
+);
+
+let total = valor;
+
+document.getElementById("valorAlmoco").innerText =
+valor.toFixed(2);
+
+if(
+document.getElementById("tipoEntrega").value
+=== "Entrega"
+){
+total += 2;
+}
+
+if(carnesSelecionadas.length > 1){
+
+total +=
+(carnesSelecionadas.length - 1) * 3;
+
+}
+
+document.getElementById("total").innerText =
+total.toFixed(2);
+
+}
+
+function enviarPedido(){
+
+const nome =
+document.getElementById("nome").value.trim();
+
+const telefone =
+document.getElementById("telefone").value.trim();
+
+const endereco =
+document.getElementById("endereco").value.trim();
+
+const entrega =
+document.getElementById("tipoEntrega").value;
+
+const pagamento =
+document.getElementById("pagamento").value;
+
+const status =
+document.getElementById("statusPagamento").value;
+
+const entregador =
+document.getElementById("entregador").value;
+
+const talher =
+document.getElementById("talher").value;
+
+const observacao =
+document.getElementById("observacao").value;
+
+const total =
+document.getElementById("total").innerText;
+
+if(nome === "" || telefone === ""){
+
+alert("Preencha nome e telefone");
+
+return;
+
+}
+
+if(
+entrega === "Entrega"
+&& endereco === ""
+){
+
+alert("Digite o endereço");
+
+return;
+
+}
+
+let mensagem =
+`🍛 PEDIDO - SANDRA REFEIÇÕES\n\n`;
+
+mensagem +=
+`👤 Nome: ${nome}\n`;
+
+mensagem +=
+`📞 Telefone: ${telefone}\n`;
+
+mensagem +=
+`🚚 Tipo: ${entrega}\n`;
+
+if(entrega === "Entrega"){
+
+mensagem +=
+`📍 Endereço: ${endereco}\n`;
+
+}
+
+mensagem +=
+`🛵 Entregador: ${entregador}\n`;
+
+mensagem +=
+`💳 Pagamento: ${pagamento}\n`;
+
+mensagem +=
+`📌 Status: ${status}\n`;
+
+mensagem +=
+`🍴 Talher: ${talher}\n`;
+
+mensagem +=
+`\n🍖 CARNES:\n`;
+
+carnesSelecionadas.forEach(item=>{
+
+mensagem += `- ${item}\n`;
+
+});
+
+mensagem +=
+`\n🍛 ACOMPANHAMENTOS:\n`;
+
+acompanhamentosSelecionados.forEach(item=>{
+
+mensagem += `- ${item}\n`;
+
+});
+
+if(observacao !== ""){
+
+mensagem +=
+`\n📝 OBS:\n${observacao}\n`;
+
+}
+
+mensagem +=
+`\n💰 TOTAL: R$ ${total}`;
+
+const numero =
+"5581985427194";
+
+window.open(
+`https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`,
+"_blank"
+);
+
+}
+
+let pedidos = [];
+
+function salvarPedido(){
+
+const nome =
+document.getElementById("nome").value;
+
+const pagamento =
+document.getElementById("pagamento").value;
+
+const status =
+document.getElementById("statusPagamento").value;
+
+const entregador =
+document.getElementById("entregador").value;
+
+const total =
+Number(
+document.getElementById("total").innerText
+);
+
+const pedido = {
+
+nome,
+pagamento,
+status,
+entregador,
+total
+
+};
+
+pedidos.push(pedido);
+
+atualizarPainel();
+
+}
+
+function atualizarPainel(){
+
+const lista =
+document.getElementById("listaPedidos");
+
+lista.innerHTML = "";
+
+let pago = 0;
+let naoPago = 0;
+let geral = 0;
+
+let junior = 0;
+let nino = 0;
+let hugo = 0;
+
+pedidos.forEach(p=>{
+
+geral += p.total;
+
+if(p.status === "Pago"){
+
+pago += p.total;
+
+}else{
+
+naoPago += p.total;
+
+}
+
+if(p.entregador === "Junior"){
+junior++;
+}
+
+if(p.entregador === "Nino"){
+nino++;
+}
+
+if(p.entregador === "Hugo"){
+hugo++;
+}
+
+const div =
+document.createElement("div");
+
+div.className =
+"bg-orange-50 border rounded-2xl p-4";
+
+div.innerHTML = `
+
+<p><strong>Cliente:</strong> ${p.nome}</p>
+<p><strong>Pagamento:</strong> ${p.pagamento}</p>
+<p><strong>Status:</strong> ${p.status}</p>
+<p><strong>Entregador:</strong> ${p.entregador}</p>
+<p><strong>Total:</strong> R$ ${p.total.toFixed(2)}</p>
+
+`;
+
+lista.appendChild(div);
+
+});
+
+document.getElementById("totalPago").innerText =
+pago.toFixed(2);
+
+document.getElementById("totalNaoPago").innerText =
+naoPago.toFixed(2);
+
+document.getElementById("totalGeral").innerText =
+geral.toFixed(2);
+
+document.getElementById("quantidadePedidos").innerText =
+pedidos.length;
+
+document.getElementById("juniorTotal").innerText =
+junior;
+
+document.getElementById("ninoTotal").innerText =
+nino;
+
+document.getElementById("hugoTotal").innerText =
+hugo;
+
+}
+
+mostrarEndereco();
+calcularTotal();
+
+</script>
+
+</body>
+</html>
