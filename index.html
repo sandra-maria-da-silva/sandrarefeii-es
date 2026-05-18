@@ -3,42 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Sandra Refeições</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
-<body class="bg-orange-50 p-5">
+<body class="bg-orange-50 min-h-screen p-4">
 
-<div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl p-6">
+<div class="max-w-7xl mx-auto">
 
-<h1 class="text-4xl font-black text-center text-orange-600 mb-6">
+<!-- TOPO -->
+
+<div class="bg-orange-600 text-white rounded-3xl p-8 text-center shadow-2xl">
+
+<h1 class="text-5xl font-black">
 Sandra Refeições 🍛
 </h1>
 
-<input
-id="nome"
-type="text"
-placeholder="Nome"
-class="w-full border-2 border-orange-200 p-4 rounded-2xl mb-4"
->
+<p class="mt-3 text-lg">
+Pedidos online
+</p>
 
-<input
-id="telefone"
-type="text"
-placeholder="Telefone"
-class="w-full border-2 border-orange-200 p-4 rounded-2xl mb-4"
->
+</div>
 
-<textarea
-id="endereco"
-placeholder="Endereço completo"
-class="w-full border-2 border-orange-200 p-4 rounded-2xl mb-4"
-></textarea>
+<div class="grid lg:grid-cols-2 gap-8 mt-8">
+
+<!-- CARDÁPIO -->
+
+<div class="bg-white rounded-3xl shadow-xl p-6">
+
+<h2 class="text-3xl font-bold text-orange-600 mb-6">
+Escolha seu almoço
+</h2>
+
+<!-- ALMOÇO -->
+
+<label class="font-bold block mb-2">
+Tipo de almoço
+</label>
 
 <select
-id="almoco"
-class="w-full border-2 border-orange-200 p-4 rounded-2xl mb-4"
+id="tipoAlmoco"
+onchange="calcularTotal()"
+class="w-full border-2 border-orange-200 rounded-2xl p-4 mb-6"
 >
 
 <option value="15">
@@ -51,38 +60,401 @@ Almoço R$ 18
 
 </select>
 
-<h2 class="font-bold text-xl mb-3">
-Carnes
-</h2>
+<!-- CARNES -->
 
-<div class="grid grid-cols-2 gap-3 mb-5">
+<h3 class="text-2xl font-bold text-orange-600 mb-4">
+🍖 Carnes
+</h3>
 
-<label><input type="checkbox" value="Frango na Chapa" class="carne"> Frango na Chapa</label>
+<div class="grid sm:grid-cols-2 gap-4 mb-8">
 
-<label><input type="checkbox" value="Galinha Guisada" class="carne"> Galinha Guisada</label>
+<label class="border-2 border-orange-200 rounded-2xl p-4 cursor-pointer">
+<input type="checkbox" value="Frango na Chapa" class="carne mr-2">
+Frango na Chapa
+</label>
 
-<label><input type="checkbox" value="Bife ao Molho" class="carne"> Bife ao Molho</label>
+<label class="border-2 border-orange-200 rounded-2xl p-4 cursor-pointer">
+<input type="checkbox" value="Galinha Guisada" class="carne mr-2">
+Galinha Guisada
+</label>
 
-<label><input type="checkbox" value="Filé de Peixe" class="carne"> Filé de Peixe</label>
+<label class="border-2 border-orange-200 rounded-2xl p-4 cursor-pointer">
+<input type="checkbox" value="Bife ao Molho" class="carne mr-2">
+Bife ao Molho
+</label>
 
-<label><input type="checkbox" value="Fígado Acebolado" class="carne"> Fígado Acebolado</label>
+<label class="border-2 border-orange-200 rounded-2xl p-4 cursor-pointer">
+<input type="checkbox" value="Filé de Peixe" class="carne mr-2">
+Filé de Peixe
+</label>
 
-<label><input type="checkbox" value="Bisteca com Barbecue" class="carne"> Bisteca com Barbecue</label>
+<label class="border-2 border-orange-200 rounded-2xl p-4 cursor-pointer">
+<input type="checkbox" value="Fígado Acebolado" class="carne mr-2">
+Fígado Acebolado
+</label>
+
+<label class="border-2 border-orange-200 rounded-2xl p-4 cursor-pointer">
+<input type="checkbox" value="Bisteca com Barbecue" class="carne mr-2">
+Bisteca com Barbecue
+</label>
 
 </div>
 
-<button
-onclick="enviarPedido()"
-class="w-full bg-green-500 hover:bg-green-600 text-white font-bold p-5 rounded-2xl"
+<!-- ACOMPANHAMENTOS -->
+
+<h3 class="text-2xl font-bold text-orange-600 mb-4">
+🍛 Acompanhamentos
+</h3>
+
+<div class="grid sm:grid-cols-2 gap-4">
+
+<label class="border-2 border-orange-200 rounded-2xl p-4">
+<input type="checkbox" value="Arroz" class="acom mr-2">
+Arroz
+</label>
+
+<label class="border-2 border-orange-200 rounded-2xl p-4">
+<input type="checkbox" value="Feijão Mulato" class="acom mr-2">
+Feijão Mulato
+</label>
+
+<label class="border-2 border-orange-200 rounded-2xl p-4">
+<input type="checkbox" value="Macarrão" class="acom mr-2">
+Macarrão
+</label>
+
+<label class="border-2 border-orange-200 rounded-2xl p-4">
+<input type="checkbox" value="Purê de Batata" class="acom mr-2">
+Purê de Batata
+</label>
+
+<label class="border-2 border-orange-200 rounded-2xl p-4">
+<input type="checkbox" value="Legumes" class="acom mr-2">
+Legumes
+</label>
+
+<label class="border-2 border-orange-200 rounded-2xl p-4">
+<input type="checkbox" value="Vinagrete" class="acom mr-2">
+Vinagrete
+</label>
+
+</div>
+
+</div>
+
+<!-- CLIENTE -->
+
+<div class="bg-white rounded-3xl shadow-xl p-6">
+
+<h2 class="text-3xl font-bold text-orange-600 mb-6">
+Dados do Cliente
+</h2>
+
+<div class="space-y-4">
+
+<input
+type="text"
+id="nome"
+placeholder="Nome do cliente"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
 >
 
-Enviar Pedido
+<input
+type="tel"
+id="telefone"
+placeholder="Telefone"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<select
+id="tipoEntrega"
+onchange="mostrarEndereco(); calcularTotal();"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<option value="Entrega">
+Entrega
+</option>
+
+<option value="Retirada">
+Retirada
+</option>
+
+</select>
+
+<!-- ENDEREÇO -->
+
+<div id="boxEndereco">
+
+<textarea
+id="endereco"
+rows="3"
+placeholder="Digite o endereço completo"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+></textarea>
+
+</div>
+
+<!-- PAGAMENTO -->
+
+<select
+id="pagamento"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<option>Pix</option>
+<option>Dinheiro</option>
+<option>Crédito</option>
+<option>Débito</option>
+<option>Fiado</option>
+
+</select>
+
+<!-- ENTREGADOR -->
+
+<select
+id="entregador"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<option>Junior</option>
+<option>Nino</option>
+<option>Hugo</option>
+
+</select>
+
+<!-- TALHER -->
+
+<select
+id="talher"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+>
+
+<option>Talher: Sim</option>
+<option>Talher: Não</option>
+
+</select>
+
+<!-- OBS -->
+
+<textarea
+id="observacao"
+rows="3"
+placeholder="Observação"
+class="w-full border-2 border-orange-200 rounded-2xl p-4"
+></textarea>
+
+<!-- TOTAL -->
+
+<div class="bg-orange-50 border-2 border-orange-200 rounded-3xl p-5">
+
+<p class="text-lg">
+Taxa entrega:
+<strong>
+R$ 2,00
+</strong>
+</p>
+
+<p class="text-lg">
+Carne extra:
+<strong>
++R$ 3,00
+</strong>
+</p>
+
+<p class="text-2xl font-black text-orange-700 mt-4">
+
+Total:
+R$
+<span id="total">
+17.00
+</span>
+
+</p>
+
+</div>
+
+<!-- BOTÕES -->
+
+<div class="grid md:grid-cols-2 gap-4">
+
+<button
+onclick="enviarPedido()"
+class="bg-green-500 hover:bg-green-600 text-white font-bold p-5 rounded-2xl"
+>
+
+Enviar WhatsApp
+
+</button>
+
+<button
+onclick="window.print()"
+class="bg-blue-500 hover:bg-blue-600 text-white font-bold p-5 rounded-2xl"
+>
+
+Imprimir
 
 </button>
 
 </div>
 
+</div>
+
+</div>
+
+<!-- PAINEL -->
+
+<div class="bg-white rounded-3xl shadow-xl p-6 mt-8">
+
+<h2 class="text-3xl font-bold text-orange-600 mb-6">
+Painel do Dia
+</h2>
+
+<div class="grid md:grid-cols-4 gap-4">
+
+<div class="bg-orange-100 rounded-2xl p-5">
+
+<p class="font-bold">
+Total Geral
+</p>
+
+<p class="text-3xl font-black text-orange-700">
+
+R$
+<span id="valorTotalDia">
+0.00
+</span>
+
+</p>
+
+</div>
+
+<div class="bg-yellow-100 rounded-2xl p-5">
+
+<p class="font-bold">
+Pedidos
+</p>
+
+<p class="text-3xl font-black text-yellow-700">
+
+<span id="totalPedidos">
+0
+</span>
+
+</p>
+
+</div>
+
+<div class="bg-green-100 rounded-2xl p-5">
+
+<p class="font-bold">
+Junior
+</p>
+
+<p class="text-3xl font-black text-green-700">
+
+<span id="junior">
+0
+</span>
+
+</p>
+
+</div>
+
+<div class="bg-blue-100 rounded-2xl p-5">
+
+<p class="font-bold">
+Nino + Hugo
+</p>
+
+<p class="text-3xl font-black text-blue-700">
+
+<span id="outros">
+0
+</span>
+
+</p>
+
+</div>
+
+</div>
+
+<div
+id="listaPedidos"
+class="space-y-4 mt-8"
+></div>
+
+</div>
+
+</div>
+
 <script>
+
+let totalDia = 0;
+let quantidadePedidos = 0;
+let junior = 0;
+let outros = 0;
+
+function mostrarEndereco(){
+
+const tipo =
+document.getElementById("tipoEntrega").value;
+
+const box =
+document.getElementById("boxEndereco");
+
+if(tipo === "Retirada"){
+
+box.style.display = "none";
+
+}else{
+
+box.style.display = "block";
+
+}
+
+}
+
+function calcularTotal(){
+
+let valor =
+Number(
+document.getElementById("tipoAlmoco").value
+);
+
+let total = valor;
+
+const entrega =
+document.getElementById("tipoEntrega").value;
+
+if(entrega === "Entrega"){
+
+total += 2;
+
+}
+
+const carnes =
+document.querySelectorAll(".carne:checked");
+
+if(carnes.length > 1){
+
+total += (carnes.length - 1) * 3;
+
+}
+
+document.getElementById("total").innerText =
+total.toFixed(2);
+
+}
+
+document.querySelectorAll(".carne").forEach(item=>{
+
+item.addEventListener("change", calcularTotal);
+
+});
+
+document.getElementById("tipoAlmoco")
+.addEventListener("change", calcularTotal);
 
 function enviarPedido(){
 
@@ -95,17 +467,64 @@ document.getElementById("telefone").value;
 const endereco =
 document.getElementById("endereco").value;
 
-const almoco =
-document.getElementById("almoco").value;
+const entrega =
+document.getElementById("tipoEntrega").value;
+
+const pagamento =
+document.getElementById("pagamento").value;
+
+const entregador =
+document.getElementById("entregador").value;
+
+const talher =
+document.getElementById("talher").value;
+
+const observacao =
+document.getElementById("observacao").value;
+
+const total =
+document.getElementById("total").innerText;
+
+if(nome === "" || telefone === ""){
+
+alert("Preencha nome e telefone");
+
+return;
+
+}
+
+if(
+entrega === "Entrega"
+&& endereco === ""
+){
+
+alert("Digite o endereço");
+
+return;
+
+}
 
 const carnes =
 document.querySelectorAll(".carne:checked");
+
+const acompanhamentos =
+document.querySelectorAll(".acom:checked");
 
 let listaCarnes = "";
 
 carnes.forEach(item=>{
 
-listaCarnes += "- " + item.value + "\\n";
+listaCarnes +=
+`- ${item.value}\n`;
+
+});
+
+let listaAcompanhamentos = "";
+
+acompanhamentos.forEach(item=>{
+
+listaAcompanhamentos +=
+`- ${item.value}\n`;
 
 });
 
@@ -119,20 +538,116 @@ mensagem +=
 `📞 Telefone: ${telefone}\n`;
 
 mensagem +=
+`🚚 ${entrega}\n`;
+
+if(entrega === "Entrega"){
+
+mensagem +=
 `📍 Endereço: ${endereco}\n`;
 
-mensagem +=
-`🍽️ Almoço: R$ ${almoco}\n\n`;
+}
 
 mensagem +=
-`🍖 CARNES:\n${listaCarnes}`;
+`🛵 Entregador: ${entregador}\n`;
+
+mensagem +=
+`💳 Pagamento: ${pagamento}\n`;
+
+mensagem +=
+`🍴 ${talher}\n`;
+
+mensagem +=
+`\n🍖 CARNES:\n${listaCarnes}`;
+
+mensagem +=
+`\n🍛 ACOMPANHAMENTOS:\n${listaAcompanhamentos}`;
+
+if(observacao !== ""){
+
+mensagem +=
+`\n📝 OBS:\n${observacao}\n`;
+
+}
+
+mensagem +=
+`\n💰 TOTAL: R$ ${total}`;
 
 window.open(
 `https://wa.me/5581985427194?text=${encodeURIComponent(mensagem)}`,
 "_blank"
 );
 
+salvarPainel(
+nome,
+pagamento,
+entregador,
+total
+);
+
 }
+
+function salvarPainel(
+
+nome,
+pagamento,
+entregador,
+total
+
+){
+
+quantidadePedidos++;
+
+totalDia += Number(total);
+
+if(entregador === "Junior"){
+
+junior++;
+
+}else{
+
+outros++;
+
+}
+
+document.getElementById("valorTotalDia").innerText =
+totalDia.toFixed(2);
+
+document.getElementById("totalPedidos").innerText =
+quantidadePedidos;
+
+document.getElementById("junior").innerText =
+junior;
+
+document.getElementById("outros").innerText =
+outros;
+
+const lista =
+document.getElementById("listaPedidos");
+
+const div =
+document.createElement("div");
+
+div.className =
+"bg-orange-50 border border-orange-200 rounded-2xl p-5";
+
+div.innerHTML = `
+
+<p><strong>Cliente:</strong> ${nome}</p>
+
+<p><strong>Pagamento:</strong> ${pagamento}</p>
+
+<p><strong>Entregador:</strong> ${entregador}</p>
+
+<p><strong>Total:</strong> R$ ${total}</p>
+
+`;
+
+lista.prepend(div);
+
+}
+
+mostrarEndereco();
+calcularTotal();
 
 </script>
 
